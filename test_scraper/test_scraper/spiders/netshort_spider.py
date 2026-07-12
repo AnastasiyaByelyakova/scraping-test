@@ -84,7 +84,7 @@ class NetShortSpider(BaseUniversalSpider):
                 # Prioritize episode data if available, otherwise use series data
                 if series_data:
                     item['title'] = series_data.get('name')
-                    item[''] = series_data.get('url') or response.url
+                    item['series_url'] = series_data.get('url') or response.url
                     item['cover_image_url'] = series_data.get('image') or series_data.get('thumbnailUrl')
                     item['description'] = " ".join([i.get() for i in response.xpath('//h2/following-sibling::div/div/text()')])
                     genre_data = series_data.get('genre')
