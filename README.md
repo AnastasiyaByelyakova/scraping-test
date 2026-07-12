@@ -123,6 +123,8 @@ PROXY_LIST = [
 ]
 ```
 
+Proxy support is optional and can be enabled or disabled via project settings ('USE_PROXIES').
+
 ---
 
 # Retry Strategy

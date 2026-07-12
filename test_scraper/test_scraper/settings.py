@@ -11,7 +11,7 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Activating System Infrastructure Modules
 DOWNLOADER_MIDDLEWARES = {
-    'test_scraper.middlewares.AntiBotProxyMiddleware': 400,
+    'test_scraper.middlewares.AntiBotProxyMiddleware': 100,
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
 }
 
@@ -39,9 +39,10 @@ PLAYWRIGHT_PROCESS_REQUEST_HEADERS = None # Added to potentially resolve header 
 PLAYWRIGHT_MAX_CONTEXTS = 1 # Limit to one browser context
 PLAYWRIGHT_MAX_PAGES_PER_CONTEXT = 8 # Limit to one page per context
 PLAYWRIGHT_START_URLS_AS_REQUESTS = True # Re-added to ensure start_urls use Playwright
-LOG_LEVEL = "DEBUG" # Changed log level to DEBUG for more verbose output
+LOG_LEVEL = "DEBUG" 
 
 # Custom settings
 CSV_FILE_PATH = 'scraped_results.csv' # Define the output CSV file name here
 MAX_PROXY_RETRIES = 3
 PROXY_LIST = ['154.219.125.230:3128']
+USE_PROXIES = False

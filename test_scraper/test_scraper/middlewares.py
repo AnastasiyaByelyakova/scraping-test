@@ -21,6 +21,7 @@ class AntiBotProxyMiddleware(RetryMiddleware):
     def __init__(self, settings):
         super().__init__(settings)
 
+        self.use_proxies = settings.getbool("USE_PROXIES", False)
         self.max_retries = settings.getint("MAX_PROXY_RETRIES", 3)
         self.proxies = settings.getlist("PROXY_LIST")
         self.dead_proxies = set()
@@ -32,14 +33,13 @@ class AntiBotProxyMiddleware(RetryMiddleware):
 
     def get_proxy(self):
 
-        available = [
-            proxy
-            for proxy in self.proxies
-            if proxy not in self.dead_proxies
-        ]
+        if not self.use_proxies:
+            return None
+
+        available = [p for p in self.proxies if p not in self.dead_proxies]
 
         if not available:
-            raise ValueError("No healthy proxies remaining.")
+            raise IgnoreRequest("No healthy proxies remaining.")
 
         return random.choice(available)
 
@@ -48,7 +48,8 @@ class AntiBotProxyMiddleware(RetryMiddleware):
 
     def process_request(self, request, spider):
 
-        if "proxy" not in request.meta:
+        if self.use_proxies and "proxy" not in request.meta:
+
             request.meta["proxy"] = self.get_proxy()
 
         request.headers["User-Agent"] = self.get_user_agent()
@@ -83,7 +84,7 @@ class AntiBotProxyMiddleware(RetryMiddleware):
 
         bad_proxy = request.meta.get("proxy")
 
-        if bad_proxy:
+        if self.use_proxies and bad_proxy:
             self.dead_proxies.add(bad_proxy)
 
         delay = 2 ** retries
@@ -118,7 +119,7 @@ class AntiBotProxyMiddleware(RetryMiddleware):
 
         bad_proxy = request.meta.get("proxy")
 
-        if bad_proxy:
+        if self.use_proxies and bad_proxy:
             self.dead_proxies.add(bad_proxy)
 
         delay = 2 ** retries
