@@ -31,7 +31,7 @@ class DeduplicationPipeline:
         return cls(csv_file_path)
 
     def process_item(self, item, spider):
-        url = item.get('url')
+        url = item.get('series_url') 
         if url in self.seen_urls:
             raise DropItem(f"Duplicate signature detected and blocked: {url}")
 

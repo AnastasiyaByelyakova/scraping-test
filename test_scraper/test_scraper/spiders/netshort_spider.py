@@ -41,17 +41,27 @@ class NetShortSpider(BaseUniversalSpider):
                     }
                 )
         nav = [i.get() for i in response.xpath('//nav/div/span/text()')]
-        if int(nav[0])<=int(nav[-1]):
-            next_page = "https://netshort.com/drama/all-plots/page/"+str(int(nav[0])+1)
-            yield scrapy.Request(
-                next_page,
-                callback=self.parse,
-                meta={
-                    "playwright": False,
-                }
-            )
+        if nav:
+            if nav[0].isdigit() and nav[-1].isdigit():
+                if int(nav[0]) <= int(nav[-1]):
+                    next_page = "https://netshort.com/drama/all-plots/page/" + str(int(nav[0]) + 1)
+                    yield scrapy.Request(
+                        next_page,
+                        callback=self.parse,
+                        meta={
+                            "playwright": False,
+                        }
+                    )
+                else:
+                    self.logger.info("No more pages to scrape.")
+                    return
+            else:
+                self.logger.warning("Pagination numbers are not valid integers.")
+                return
         else:
+            self.logger.warning("No pagination found, stopping.")
             return
+
 
     def parse_details(self, response):
         item = SeriesItem()
@@ -74,7 +84,7 @@ class NetShortSpider(BaseUniversalSpider):
                 # Prioritize episode data if available, otherwise use series data
                 if series_data:
                     item['title'] = series_data.get('name')
-                    item['series_url'] = series_data.get('url') or response.url
+                    item[''] = series_data.get('url') or response.url
                     item['cover_image_url'] = series_data.get('image') or series_data.get('thumbnailUrl')
                     item['description'] = " ".join([i.get() for i in response.xpath('//h2/following-sibling::div/div/text()')])
                     genre_data = series_data.get('genre')
