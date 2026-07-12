@@ -11,8 +11,8 @@ Every new target site will inherit from BaseUniversalSpider. They simply define 
 
 **Proxy & Anti-Bot Shielding**
 
-The AntiBotProxyMiddleware automatically hooks into every outgoing network request. It handles user-agent randomization, rotates proxies dynamically from an upstream pool, masks browser configurations via playwright-stealth, and watches for HTTP 403/503 codes to auto-throttle or switch nodes safely.
-(Do not forget to set correct proxies!)
+The AntiBotProxyMiddleware automatically hooks into every outgoing network request. It handles user-agent randomization, rotates proxies dynamically from an upstream pool.
+(Do not forget to set correct proxies as enviromental variables!)
 
 ## Setup
 

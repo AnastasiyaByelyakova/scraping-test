@@ -1,3 +1,4 @@
+import os
 import random
 from scrapy.downloadermiddlewares.retry import RetryMiddleware
 from scrapy.utils.response import response_status_message
@@ -14,9 +15,10 @@ class AntiBotProxyMiddleware(RetryMiddleware):
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     ]
 
-    # Placeholder proxy pool - in production, tie this to your proxy provider API (e.g., BrightData, Oxylabs)
-    PROXY_POOL = [ ]
-
+    # Proxy pool 
+    self.PROXY_POOL = os.getenv('PROXY_LIST', '').split(',')
+    self.PROXY_POOL = [p.strip() for p in self.PROXY_POOL if p.strip()]
+        
     def process_request(self, request, spider):
         # 1. Rotate User-Agents for raw HTTP calls
         request.headers['User-Agent'] = random.choice(self.USER_AGENTS)

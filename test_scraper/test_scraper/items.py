@@ -12,5 +12,5 @@ class SeriesItem(scrapy.Item):
     description = scrapy.Field()
     genre = scrapy.Field()
     episodes_count = scrapy.Field()
-    status = scrapy.Field()
-    tags = scrapy.Field()
+    # status = scrapy.Field()
+    # tags = scrapy.Field()
