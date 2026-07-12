@@ -99,8 +99,6 @@ The scraper incorporates several techniques to reduce blocking:
 - Playwright rendering for JavaScript pages
 - configurable request headers
 
-The architecture is designed so additional anti-bot mechanisms (browser fingerprinting, CAPTCHA solving, Cloudflare bypass, residential proxy providers, etc.) can be added without modifying spider logic.
-
 ---
 
 
