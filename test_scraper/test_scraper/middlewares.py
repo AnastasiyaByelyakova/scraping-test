@@ -15,10 +15,7 @@ class AntiBotProxyMiddleware(RetryMiddleware):
     ]
 
     # Placeholder proxy pool - in production, tie this to your proxy provider API (e.g., BrightData, Oxylabs)
-    PROXY_POOL = [
-        "http://username:password@residential.proxyprovider.com:8000",
-        "http://username:password@residential.proxyprovider.com:8001"
-    ]
+    PROXY_POOL = [ ]
 
     def process_request(self, request, spider):
         # 1. Rotate User-Agents for raw HTTP calls

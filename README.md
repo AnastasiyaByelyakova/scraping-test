@@ -12,7 +12,7 @@ Every new target site will inherit from BaseUniversalSpider. They simply define 
 **Proxy & Anti-Bot Shielding**
 
 The AntiBotProxyMiddleware automatically hooks into every outgoing network request. It handles user-agent randomization, rotates proxies dynamically from an upstream pool, masks browser configurations via playwright-stealth, and watches for HTTP 403/503 codes to auto-throttle or switch nodes safely.
-
+(Do not forget to set correct proxies!)
 
 ## Setup
 
@@ -44,12 +44,8 @@ To set up and run this project, follow these steps:
 To run the spider, navigate to the project's root directory (`scraping_task`) and execute the Scrapy command:
 
 ```bash
-scrapy crawl netshort -o netshort_series.json # Output to JSON file
-# or
-scrapy crawl netshort -o netshort_series.csv # Output to CSV file
+scrapy crawl netshort 
 ```
-
-The scraped data will be saved to `netshort_series.json` or `netshort_series.csv` in the project root.
 
 ## Spider Details
 

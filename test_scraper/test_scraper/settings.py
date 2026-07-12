@@ -5,13 +5,13 @@ SPIDER_MODULES = ["test_scraper.spiders"]
 NEWSPIDER_MODULE = "test_scraper.spiders"
 
 # Politeness and Anti-Fingerprinting Concurrency Rules
-CONCURRENT_REQUESTS = 18
+CONCURRENT_REQUESTS = 15
 DOWNLOAD_DELAY = 1.5  # Strategic adaptive crawl delay
 RANDOMIZE_DOWNLOAD_DELAY = True
 
 # Activating System Infrastructure Modules
 DOWNLOADER_MIDDLEWARES = {
-    # 'test_scraper.middlewares.AntiBotProxyMiddleware': 400,
+    'test_scraper.middlewares.AntiBotProxyMiddleware': 400,
     'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
 }
 

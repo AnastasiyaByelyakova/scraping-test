@@ -42,7 +42,7 @@ class NetShortSpider(BaseUniversalSpider):
                     }
                 )
         nav = [i.get() for i in response.xpath('//nav/div/span/text()')]
-        if int(nav[0])<3:#int(nav[-1]):
+        if int(nav[0])<=int(nav[-1]):
             next_page = "https://netshort.com/drama/all-plots/page/"+str(int(nav[0])+1)
             print(next_page)
             yield scrapy.Request(
@@ -57,7 +57,6 @@ class NetShortSpider(BaseUniversalSpider):
 
     def parse_details(self, response):
         item = SeriesItem()
-        print(response.meta['n'], response.meta['m'])
         # 1. Extract JSON-LD
         json_ld_script = response.css('script[type="application/ld+json"]::text').get()
         if json_ld_script:
