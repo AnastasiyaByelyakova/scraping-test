@@ -4,6 +4,7 @@ from ..items import SeriesItem
 from .base_spider import BaseUniversalSpider
 import scrapy
 import json
+import tqdm
 from scrapy.utils.defer import deferred_from_coro
 from scrapy_playwright.handler import ScrapyPlaywrightDownloadHandler # Import the handler
 
@@ -37,11 +38,11 @@ class NetShortSpider(BaseUniversalSpider):
                     detail_url,
                     callback=self.parse_details,
                     meta={
-                        "playwright": True,
+                        "playwright": False,
                     }
                 )
         nav = [i.get() for i in response.xpath('//nav/div/span/text()')]
-        if int(nav[0])<int(nav[-1]):
+        if int(nav[0])<3:#int(nav[-1]):
             next_page = "https://netshort.com/drama/all-plots/page/"+str(int(nav[0])+1)
             print(next_page)
             yield scrapy.Request(
@@ -51,10 +52,12 @@ class NetShortSpider(BaseUniversalSpider):
                     "playwright": True,
                 }
             )
+        else:
+            return
 
     def parse_details(self, response):
         item = SeriesItem()
-
+        print(response.meta['n'], response.meta['m'])
         # 1. Extract JSON-LD
         json_ld_script = response.css('script[type="application/ld+json"]::text').get()
         if json_ld_script:
@@ -88,7 +91,6 @@ class NetShortSpider(BaseUniversalSpider):
                 self.logger.warning(f"Could not decode JSON-LD from {response.url}")
         else:
             self.logger.warning(f"No JSON-LD script found on {response.url}")
-        # print(item)
         yield item
 
         # Explicitly close the Playwright page after processing

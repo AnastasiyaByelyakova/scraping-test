@@ -5,7 +5,7 @@ SPIDER_MODULES = ["test_scraper.spiders"]
 NEWSPIDER_MODULE = "test_scraper.spiders"
 
 # Politeness and Anti-Fingerprinting Concurrency Rules
-CONCURRENT_REQUESTS = 8
+CONCURRENT_REQUESTS = 18
 DOWNLOAD_DELAY = 1.5  # Strategic adaptive crawl delay
 RANDOMIZE_DOWNLOAD_DELAY = True
 
@@ -37,7 +37,7 @@ PLAYWRIGHT_BROWSER_TYPE = "chromium" # Added global Playwright browser type
 PLAYWRIGHT_DEFAULT_NAVIGATION_TIMEOUT = 1800000000 # Reverted to 180 seconds
 PLAYWRIGHT_PROCESS_REQUEST_HEADERS = None # Added to potentially resolve header processing issues
 PLAYWRIGHT_MAX_CONTEXTS = 1 # Limit to one browser context
-PLAYWRIGHT_MAX_PAGES_PER_CONTEXT = 3 # Limit to one page per context
+PLAYWRIGHT_MAX_PAGES_PER_CONTEXT = 8 # Limit to one page per context
 PLAYWRIGHT_START_URLS_AS_REQUESTS = True # Re-added to ensure start_urls use Playwright
 LOG_LEVEL = "ERROR" # Changed log level to DEBUG for more verbose output
 
