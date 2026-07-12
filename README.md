@@ -201,8 +201,14 @@ The output is exported as a deduplicated CSV file.
 Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install scrapy scrapy-playwright playwright
 ```
+
+
+```bash
+playwright install
+```
+
 
 Run the spider
 
