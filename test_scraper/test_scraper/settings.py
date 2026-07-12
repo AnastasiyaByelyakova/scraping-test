@@ -39,7 +39,9 @@ PLAYWRIGHT_PROCESS_REQUEST_HEADERS = None # Added to potentially resolve header 
 PLAYWRIGHT_MAX_CONTEXTS = 1 # Limit to one browser context
 PLAYWRIGHT_MAX_PAGES_PER_CONTEXT = 8 # Limit to one page per context
 PLAYWRIGHT_START_URLS_AS_REQUESTS = True # Re-added to ensure start_urls use Playwright
-LOG_LEVEL = "ERROR" # Changed log level to DEBUG for more verbose output
+LOG_LEVEL = "DEBUG" # Changed log level to DEBUG for more verbose output
 
 # Custom settings
 CSV_FILE_PATH = 'scraped_results.csv' # Define the output CSV file name here
+MAX_PROXY_RETRIES = 3
+PROXY_LIST = ['154.219.125.230:3128']

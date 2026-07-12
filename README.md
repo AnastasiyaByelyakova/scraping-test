@@ -1,66 +1,237 @@
-# Scraping Task: NetShort Scraper
+# NetShort Scraper
 
-This project contains a Scrapy spider designed to scrape series information from `netshort.com` using Playwright for handling dynamic content and pagination.
-* Scrapy natively enforces a clean separation of concerns. Spiders only handle parsing logic; structural behaviors (like proxy insertion, deduplication, and file generation) are globally managed by Middlewares and Pipelines.
-* Hybrid Execution Efficiency: It allows to scrape standard static sections using raw asynchronous HTTP requests for high speed, while selectively triggering headless browser context (scrapy-playwright) exclusively for sections protected by dynamic JavaScript.
-* First-Class Extensibility: Adding a new target site in the future requires writing nothing more than a simple, lightweight parsing class. The core routing engine remains completely untouched.
+A reusable web scraping framework built with **Scrapy** and **Playwright** for collecting publicly available series from NetShort.
 
-**Extensibility**
+The project is designed to be extensible to additional websites while incorporating proxy management and anti-bot techniques as core architectural components.
 
-Every new target site will inherit from BaseUniversalSpider. They simply define their unique domain limits and CSS selector maps.
+---
 
-**Proxy & Anti-Bot Shielding**
+## Features
 
-The AntiBotProxyMiddleware automatically hooks into every outgoing network request. It handles user-agent randomization, rotates proxies dynamically from an upstream pool.
-(Do not forget to set correct proxies as enviromental variables!)
+- Scrapy-based crawling framework
+- Playwright integration for JavaScript-rendered pages
+- Reusable base spider architecture
+- JSON-LD extraction where available
+- CSV export
+- Duplicate filtering
+- Configurable proxy support
+- Automatic proxy rotation
+- User-Agent rotation
+- Automatic retries on blocked requests
+- Exponential backoff for temporary blocking
+- Separation of scraping logic and networking middleware
 
-## Setup
+---
 
-To set up and run this project, follow these steps:
+## Project Structure
 
-1.  **Clone the repository (if applicable):**
-    ```bash
-    # If this is a git repository
-    # git clone <your-repo-url>
-    # cd scraping_task
-    ```
-
-2.  **Create and activate a virtual environment:**
-    It's recommended to use a virtual environment to manage project dependencies.
-    ```bash
-    python -m venv venv
-    source venv/bin/activate # On Windows, use `venv\Scripts\activate`
-    ```
-
-3.  **Install dependencies:**
-    Install Scrapy, Scrapy-Playwright, and Playwright browser executables.
-    ```bash
-    pip install scrapy scrapy-playwright
-    playwright install chromium # Install the Chromium browser for Playwright
-    ```
-
-## Usage
-
-To run the spider, navigate to the project's root directory (`scraping_task`) and execute the Scrapy command:
-
-```bash
-scrapy crawl netshort 
+```
+test_scraper/
+│
+├── spiders/
+│   ├── base_spider.py
+│   └── netshort.py
+│
+├── middlewares.py
+├── pipelines.py
+├── settings.py
+└── items.py
 ```
 
-## Spider Details
+---
 
-### `NetShortSpider`
+## Technology Choice
 
-*   **Name:** `netshort`
-*   **Allowed Domains:** `netshort.com`
-*   **Start URLs:** `https://netshort.com/drama/all-plots`
-*   **Functionality:**
-    *   Uses Playwright to navigate the website, handling JavaScript-rendered content.
-    *   Extracts series cards from the main catalog page.
-    *   Follows links to individual series detail pages to extract more information.
-    *   Implements pagination by parsing page numbers from the navigation bar.
-    *   Blocks unwanted resource types (images, stylesheets, fonts) using a Playwright hook to improve scraping efficiency.
-    *   Extracts structured data (JSON-LD) where available, falling back to CSS/XPath selectors for other details.
+This project uses **Scrapy** together with **scrapy-playwright**.
+
+### Why Scrapy?
+
+Scrapy provides:
+
+- asynchronous request scheduling
+- efficient crawling
+- middleware support
+- automatic duplicate filtering
+- pipelines
+- excellent extensibility
+
+### Why Playwright?
+
+NetShort renders part of its content using JavaScript.
+
+Playwright allows rendering only the pages that require JavaScript while keeping the remainder of the crawl lightweight and efficient.
+
+---
+
+# Architecture
+
+```
+Spider
+   │
+   ▼
+Downloader Middleware
+   │
+   ├── Proxy rotation
+   ├── User-Agent rotation
+   ├── Retry handling
+   ├── Exponential backoff
+   └── Anti-bot request preparation
+   │
+Downloader
+   │
+Website
+```
+
+The spider is responsible only for extracting data.
+
+Networking concerns such as proxy selection, retries, and request preparation are handled by downloader middleware.
+
+---
+
+# Anti-Bot Strategy
+
+The scraper incorporates several techniques to reduce blocking:
+
+- rotating proxies
+- rotating User-Agents
+- automatic retries
+- exponential backoff
+- Playwright rendering for JavaScript pages
+- configurable request headers
+
+The architecture is designed so additional anti-bot mechanisms (browser fingerprinting, CAPTCHA solving, Cloudflare bypass, residential proxy providers, etc.) can be added without modifying spider logic.
+
+---
+
+
+# Proxy Support
+
+Proxy management is implemented as a dedicated downloader middleware.
+
+Features include:
+
+- configurable proxy list
+- automatic proxy selection
+- proxy rotation
+- removal of failed proxies
+- configurable retry limits
+
+Proxy configuration:
+
+```python
+PROXY_LIST = [
+    "http://user:password@proxy1:8000",
+    "http://user:password@proxy2:8000",
+]
+```
+
+---
+
+# Retry Strategy
+
+The scraper automatically retries requests when encountering temporary failures.
+
+Retry HTTP status codes:
+
+- 403 Forbidden
+- 429 Too Many Requests
+- 500 Internal Server Error
+- 502 Bad Gateway
+- 503 Service Unavailable
+- 504 Gateway Timeout
+
+Network exceptions are also retried automatically.
+
+---
+
+# Exponential Backoff
+
+Blocked requests are retried using exponential backoff.
+
+Example:
+
+| Retry | Delay |
+|-------:|------:|
+| 1 | 1 second |
+| 2 | 2 seconds |
+| 3 | 4 seconds |
+| 4 | 8 seconds |
+| 5 | 16 seconds |
+
+This reduces request bursts and helps avoid repeated blocking.
+
+---
+
+# User-Agent Rotation
+
+Each outgoing request receives a randomly selected browser User-Agent.
+
+Supported browsers include:
+
+- Chrome
+- Firefox
+- Safari
+- Edge
+
+This reduces the likelihood of detection by basic anti-bot systems.
+
+---
+
+# Data Extraction
+
+The scraper collects:
+
+- Series title
+- Series URL
+- Cover image URL
+- Description
+- Genre 
+- Episode count
+
+Not available and not exported: 
+- Status (when available)
+- Tags / ranking (when available)
+
+The output is exported as a deduplicated CSV file.
+
+---
+
+# Running
+
+Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the spider
+
+```bash
+scrapy crawl netshort
+```
+
+
+---
+
+# Extending to Other Websites
+
+The framework has been designed for reuse.
+
+To add support for another website:
+
+1. Create a new spider inheriting from `BaseUniversalSpider`.
+2. Implement the parsing logic.
+3. Reuse the existing middleware for:
+   - proxy management
+   - retries
+   - anti-bot handling
+   - request preparation
+
+No changes to the middleware are required.
+
+---
+
+
 
 ## Configuration
 

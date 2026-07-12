@@ -65,6 +65,8 @@ class CsvExportPipeline:
 
     def spider_opened(self, spider):
         # Check if file exists to determine if header needs to be written
+        # Used 'a'+ mode to append to the file if it exists, or create it if it doesn't, to handle cases where the spider is run multiple times. 
+        # And avoid loosing data from previous runs.
         self.file = open(self.file_path, 'a+', newline='', encoding='utf-8')
         self.writer = csv.writer(self.file)
 

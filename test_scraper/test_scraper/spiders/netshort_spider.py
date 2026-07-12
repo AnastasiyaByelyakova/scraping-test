@@ -19,7 +19,7 @@ class NetShortSpider(BaseUniversalSpider):
                 url,
                 callback=self.parse,
                 meta={
-                    "playwright": True,
+                    "playwright": False,
                 },
                 priority=100
             )
@@ -43,12 +43,11 @@ class NetShortSpider(BaseUniversalSpider):
         nav = [i.get() for i in response.xpath('//nav/div/span/text()')]
         if int(nav[0])<=int(nav[-1]):
             next_page = "https://netshort.com/drama/all-plots/page/"+str(int(nav[0])+1)
-            print(next_page)
             yield scrapy.Request(
                 next_page,
                 callback=self.parse,
                 meta={
-                    "playwright": True,
+                    "playwright": False,
                 }
             )
         else:
