@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c04bd55d-219e-478e-ace0-87d3cf0b8dd2" name="Changes" comment="Project">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scraper/scraped_results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/test_scraper/scraped_results.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scraper/test_scraper/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scraper/test_scraper/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scraper/test_scraper/spiders/netshort_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_scraper/test_scraper/spiders/netshort_spider.py" afterDir="false" />
+    <list default="true" id="c04bd55d-219e-478e-ace0-87d3cf0b8dd2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/scraping_task.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_scraper/test_scraper/spiders/base_spider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_scraper/test_scraper/spiders/netshort_spider.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,18 +32,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;AnastasiyaByelyakova&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/AnastasiyaByelyakova/scraping-test&quot;,
-    &quot;accountId&quot;: &quot;364ad8ec-e178-4ac3-b16a-07ace0ff80ed&quot;
-  }
-}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6,
   &quot;fromUser&quot;: false
@@ -85,33 +78,11 @@
       <workItem from="1783686854269" duration="6664000" />
       <workItem from="1783696787828" duration="5500000" />
       <workItem from="1783704111213" duration="13195000" />
-      <workItem from="1783775866770" duration="8517000" />
-      <workItem from="1783850500869" duration="2793000" />
+      <workItem from="1783775866770" duration="5992000" />
     </task>
-    <task id="LOCAL-00001" summary="Project">
-      <option name="closed" value="true" />
-      <created>1783794450413</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1783794450413</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Project">
-      <option name="closed" value="true" />
-      <created>1783794604849</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1783794604849</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Project" />
   </component>
 </project>
